@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { User, Post, Comment } = require('../model');
 const withAuth = require('../utils/withAuth');
 
+//getting all posts for homepage
 router.get('/', async (req, res) => {
   try {
     const postData = await Post.findAll({
@@ -25,6 +26,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+//view a particular post via id
 router.get('/post/:id', async (req, res) => {
   try {
     const postData = await Post.findByPk(req.params.id, {
@@ -40,7 +42,6 @@ router.get('/post/:id', async (req, res) => {
       ],
     });
     if (postData) {
-      //   res.json(postData);
       const postDataGet = postData.get({ plain: true });
       console.log(postDataGet);
       res.render('post', { ...postDataGet });
@@ -64,27 +65,22 @@ router.get('/dashboard', withAuth, async (req, res) => {
         },
       ],
     });
-    if (userData) {
-      const user = userData.get({ plain: true });
+    const user = userData.get({ plain: true });
 
-      res.render('dashboard', {
-        ...user,
-        logged_in: true,
-      });
-    } else {
-      res.status(400);
-    }
+    res.render('dashboard', {
+      ...user,
+      logged_in: true,
+    });
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-router.get('/login', withAuth, async (req, res) => {
-  if (req.session.logged_in) {
-    res.redirect('/');
-    return;
-  } else {
+router.get('/login', async (req, res) => {
+  try {
     res.render('login');
+  } catch (error) {
+    res.status(500).json(error);
   }
 });
 

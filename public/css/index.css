@@ -34,6 +34,10 @@ p {
   color: white;
   background: lightseagreen;
 }
+.card-header {
+  color: white;
+  background: lightseagreen;
+}
 .card-footer {
   background: lightseagreen;
   color: white;
