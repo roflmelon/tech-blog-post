@@ -45,7 +45,7 @@ router.get('/post/:id', async (req, res) => {
     });
     if (postData) {
       const postDataGet = postData.get({ plain: true });
-      res.render('post', { ...postDataGet });
+      res.render('post', { ...postDataGet, logged_in: req.session.logged_in });
     } else {
       res.status(400);
     }

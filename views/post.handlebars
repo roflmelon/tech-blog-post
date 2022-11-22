@@ -1,5 +1,9 @@
 <div class='container'>
-  <div class='card card-border overflow-hidden inline mb-4'>
+  <div
+    class='card card-border overflow-hidden inline mb-4'
+    id='post-all'
+    data-postid={{id}}
+  >
     <div class='card-head p-2 pl-3 d-flex justify-content-between'>
       <h3 class='pt-1'>{{post_title}}</h3>
       <span class='pt-2'>{{date_created}}</span>
@@ -11,12 +15,35 @@
       <p>Created by: {{user.username}}</p>
     </div>
     <strong class='p-4 text-center'>Comments:</strong>
-    {{#each comments as |comment|}}
-      <div class='card p-4'>
-        <div class='mb-3'><strong>{{comment.text}}</strong></div>
-        <div>Date Posted: {{comment.date_created}}</div>
-        <div>Posted By: {{user.username}}</div>
-      </div>
-    {{/each}}
+    {{#if logged_in}}
+      {{#each comments as |comment|}}
+        <div class='card p-4'>
+          <div class='mb-3'><strong>{{comment.text}}</strong></div>
+          <div>Date Posted: {{comment.date_created}}</div>
+          <div>Posted By: {{user.username}}</div>
+        </div>
+      {{/each}}
+      <form id='createComment' class='m-5'><label
+          for='commentInput'
+          class='post-label mt-4'
+        >Leave a Comment:</label>
+        <input
+          type='text'
+          class='form-control'
+          name='commentInput'
+          id='commentInput'
+          placeholder='Leave your comment here'
+        />
+        <button
+          type='submit'
+          class='btn btn-primary m-3 mx-auto'
+        >Submit</button>
+      </form>
+    {{else}}
+      <a href='/login' class='text-center mb-3'>You must login first to view the
+        comments</a>
+    {{/if}}
   </div>
 </div>
+
+<script src='/js/comment.js'></script>
