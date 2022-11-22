@@ -17,7 +17,9 @@ router.get('/', async (req, res) => {
     if (postData) {
       const posts = postData.map((posts) => posts.get({ plain: true }));
 
-      res.status(200).render('homepage', { posts });
+      res
+        .status(200)
+        .render('homepage', { posts, logged_in: req.session.logged_in });
     } else {
       res.status(400);
     }
@@ -43,7 +45,6 @@ router.get('/post/:id', async (req, res) => {
     });
     if (postData) {
       const postDataGet = postData.get({ plain: true });
-      console.log(postDataGet);
       res.render('post', { ...postDataGet });
     } else {
       res.status(400);
@@ -55,7 +56,6 @@ router.get('/post/:id', async (req, res) => {
 
 router.get('/dashboard', withAuth, async (req, res) => {
   try {
-    // Find the logged in user based on the session ID
     const userData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ['password'] },
       include: [
@@ -76,12 +76,35 @@ router.get('/dashboard', withAuth, async (req, res) => {
   }
 });
 
-router.get('/login', async (req, res) => {
-  try {
-    res.render('login');
-  } catch (error) {
-    res.status(500).json(error);
+router.get('/login', (req, res) => {
+  if (req.session.logged_in) {
+    res.redirect('/');
+    return;
   }
+  res.render('login');
 });
 
+router.get('/edit/:id', withAuth, async (req, res) => {
+  try {
+    const postData = await Post.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+        {
+          model: Comment,
+          include: [User],
+        },
+      ],
+    });
+    const post = postData.get({ plain: true });
+    res.render('edit', {
+      ...post,
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 module.exports = router;

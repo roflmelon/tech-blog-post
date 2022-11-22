@@ -1,0 +1,27 @@
+<div class='container mt-4'>
+  <h1 class='text-center'>Update Post</h2>
+  <div>
+    <form class='form edit-post'>
+      <label for='updateTitle' class='post-label mt-4'>Post Title:</label>
+      <input
+        type='text'
+        class='form-control'
+        name='updateTitle'
+        id='updateTitle'
+        placeholder='Title of post'
+        value="{{post_title}}"
+      />
+      <label for='updateContent' class='post-label mt-4'>Content Body:</label>
+      <textarea
+        name='updateContent'
+        id='updateContent'
+        class='form-control'
+        cols='30'
+        rows='10'
+      >{{post_content}}</textarea>
+      <button type='submit' class='btn btn-primary m-3 mx-auto' data-id={{id}}>Update Post</button>
+    </form>
+  </div>
+
+
+<script src="/js/edit.js"></script>

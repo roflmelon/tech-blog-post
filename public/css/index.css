@@ -43,3 +43,16 @@ p {
   color: white;
   padding: 0;
 }
+
+#logout {
+  border: none;
+  background-color: none;
+}
+
+.post-label {
+  font-size: 1.5rem;
+}
+
+button {
+  border-radius: 10px;
+}
