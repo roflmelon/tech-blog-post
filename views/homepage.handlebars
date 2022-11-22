@@ -1,0 +1,20 @@
+<link rel='stylesheet' href='/css/homepage.css' />
+
+<div class='container'>
+  {{#each posts as |post|}}
+    <a href='post/{{post.id}}'>
+      <div class='card card-border overflow-hidden inline mb-4'>
+        <div class='card-head p-2 pl-3 d-flex justify-content-between'>
+          <h3 class='pt-1'>{{post.post_title}}</h3>
+          <span class='pt-2'>{{post.date_created}}</span>
+        </div>
+        <div class='card-body'>
+          <p>{{post.post_content}}</p>
+        </div>
+        <div class='text-right pr-4 card-footer'>
+          <p>Created by: {{post.user.username}}</p>
+        </div>
+      </div>
+    </a>
+  {{/each}}
+</div>
