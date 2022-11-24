@@ -25,7 +25,7 @@
 - No installation required.
 - Use this live site with direct link here:
 
-  [Tech-Blog-Posts](https://placeholder.com).
+  [Tech-Blog-Posts](https://tech-blog-posting.herokuapp.com/).
 
 ## License
 
